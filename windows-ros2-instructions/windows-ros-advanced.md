@@ -1,6 +1,6 @@
 # Advanced Steps
 
-1. Download the windows-ros2.zip from [the link]()
+1. Download the windows-ros2.zip from https://drive.google.com/drive/folders/1ccL3-VYHPmKJODokbvOHA6Drp1vD3YpY?usp=sharing
 
 2. Run ***Windows PowerShell*** as administrator
 
