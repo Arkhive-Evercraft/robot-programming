@@ -1,0 +1,190 @@
+Support for windows 10
+
+Package manager use for dependencies:
+Windows: Chocolatey, pip
+
+
+INSTALL CHOCOLATEY
+==================
+Requirements:
+	> Supported Windows client and server Operating Systems (can run on older Operating Systems)
+	> PowerShell v2+ (minimum is v3 for install from this website due to TLS 1.2 requirement)
+
+Installation:
+	Goto: https://chocolatey.org/install
+		> Individual Installation
+	In start menu: type powershell / navigate to Windows PowerShell
+		> right-click run as administrator
+		> yes
+		
+	With PowerShell, you must ensure Get-ExecutionPolicy is not Restricted. 
+	We suggest using Bypass to bypass the policy to get things installed or AllSigned for quite a bit more security.
+		> Run Get-ExecutionPolicy
+		> If it returns Restricted, then run Set-ExecutionPolicy AllSigned or Set-ExecutionPolicy Bypass -Scope Process.
+		
+		Run:
+		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+		If you don't see any errors, you are ready to use Chocolatey! Type choco or choco -? for help menu
+		> https://docs.chocolatey.org/en-us/getting-started for getting started
+		
+INSTALL PYTHON
+===================
+Python 3.8.3 is required
+
+Install python with chocolatey
+	> choco install -y python --version 3.8.3
+	
+
+INSTALL VISUAL C++ REDISTRIBUTABLES
+====================================
+Install with chocolatey
+	> choco install -y vcredist2013 vcredist140
+	Don't worry if one or both are already installed
+	
+INSTALL OPENSSL
+================
+Goto: https://slproweb.com/products/Win32OpenSSL.html
+Download: Win64 OpenSSL v1.1.1n OpenSSL installer
+Don’t download the Win32 or Light versions, or the v3.X.Y installers.
+
+---
+
+Use chocolatey to install OpenSSL 1.1.1.3
+	> choco install openssl --version=1.1.1.3
+	> run script when prompted
+	
+Type command to set environment variable that persists over sessions:
+	> setx /m OPENSSL_CONF "C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"
+	
+You will also need to append the OpenSSL-Win64 bin folder to your PATH:
+	> clicking the Windows icon, 
+	> typing “Environment Variables”, 
+	> then clicking on “Edit the system environment variables”. 
+	> In the resulting dialog, click “Environment Variables”, 
+	> then click “Path” on the bottom pane, finally 
+	> click “Edit” and add the path below.
+	> add C:\Program Files\OpenSSL-Win64\bin\ path to environment variables
+	> OK OK OK
+	
+INSTALL VISUAL STUDIO
+======================
+ >! Not visual studio code
+ >! Visual Studio 2019
+ >! not code
+ >! Actually called Community
+ 
+ Microsoft provides a free of charge version of Visual Studio 2019, named Community, 
+ which can be used to build applications that use ROS 2
+	> https://visualstudio.microsoft.com/free-developer-offers/
+	> download community
+	> run installer
+	
+	Make sure that the Visual C++ features are installed.
+		> An easy way to make sure they’re installed is to select the 
+			Desktop development with C++ workflow during the install.
+			
+	Make sure that no C++ CMake tools are installed by unselecting them in the list of components to be installed.
+		[removed] C++ Clang tools for windows; C++ Cmake Tools for windows
+	
+INSTALL OPENCV
+===============
+For working with computer vision 
+(Some of the examples require OpenCV to be installed)
+
+You can download a precompiled version of OpenCV 3.4.6 from
+https://github.com/ros2/ros2/releases/download/opencv-archives/opencv-3.4.6-vc16.VS2019.zip
+
+Extract to Program Files
+
+Assuming you unpacked it to C:\Program Files\opencv, type the following on a Admin Command Prompt (requires Admin privileges):
+	> setx /m OpenCV_DIR "C:\Program Files\opencv"
+
+Since you are using a precompiled ROS version, we have to tell it where to find the OpenCV libraries. 
+You have to extend the PATH variable to C:\Program Files\opencv\x64\vc16\bin.
+
+INSTALL DEPENDENCIES
+=====================
+Install CMake:
+	> choco install -y cmake
+	> You will need to append the CMake bin folder C:\Program Files\CMake\bin to your PATH.
+	
+Install Git packages:
+	> Please download 
+		asio.1.12.1.nupkg
+		bullet.2.89.0.nupkg
+		cunit.2.1.3.nupkg
+		eigen-3.3.4.nupkg
+		tinyxml-usestl.2.6.2.nupkg
+		tinyxml2.6.0.0.nupkg
+		log4cxx.0.10.0.nupkg
+	from https://github.com/ros2/choco-packages/releases/latest
+		> 
+	> copy path of download folder
+	> run choco install -y -s <PATH\TO\DOWNLOADS> asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet in admin terminal
+	> Please replace <PATH\TO\DOWNLOADS> with the folder you downloaded the packages to.
+	
+>>>! At this point, add all the environment paths and restart terminal (as admin)
+
+Install python command line tools:
+	> python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro
+	>!! Error - might have to upgrade pip
+		> python -m pip install --upgrade pip
+	
+	
+INSTALL RQT DEPENDENCIES
+=========================
+python -m pip install -U pydot PyQt5
+
+To run rqt_graph, you’ll need Graphviz. (highly recommend)
+	> choco install graphviz
+	
+	You will need to append the Graphviz bin folder 
+	C:\Program Files\Graphviz\bin to your PATH,
+	by navigating to “Edit the system environment variables” as described above.
+	
+ROS2 INSTALL
+============
+Goto: https://github.com/ros2/ros2/releases
+	> https://github.com/ros2/ros2/releases?page=2 for Foxy
+	> Download the latest package for Windows, e.g., ros2-foxy-*-windows-AMD64.zip
+	> create new folder in C:\ called "dev"
+	> unzip package into C:\dev
+		> tutorial has the folder named "ros2_foxy" but package is named ros2-windows
+		> can either rename the file or remember to use ros2-windows where it says ros2_foxy
+		
+ENVIRONMENT SETUP
+=================
+Start a command shell and source the ROS 2 setup file to set up the workspace:
+	> C:\dev\ros2_foxy\local_setup.bat
+	
+It is normal that the previous command, if nothing else went wrong, 
+outputs “The system cannot find the path specified.” exactly once.
+
+
+TEST INSTALL
+============
+In a command shell, set up the ROS 2 environment as described above and then run a C++ talker:
+	> ros2 run demo_nodes_cpp talker
+
+Start another command shell and run a Python listener:
+	> ros2 run demo_nodes_py listener
+
+TROUBLESHOOTING
+================
+https://docs.ros.org/en/foxy/How-To-Guides/Installation-Troubleshooting.html#windows-troubleshooting
+
+UNINSTALL
+=========
+If you installed your workspace with colcon as instructed above, “uninstalling” 
+could be just a matter of opening a new terminal and not sourcing the workspace’s setup file. 
+This way, your environment will behave as though there is no Foxy install on your system.
+
+If you’re also trying to free up space, you can delete the entire workspace directory with:
+	> rmdir /s /q \ros2_foxy
+
+
+OTHER MAYBE USEFUL THINGS
+=========================
+https://wiki.ros.org/Installation/Windows
+https://classic.gazebosim.org/tutorials?tut=install_on_windows&cat=install	
+https://gazebosim.org/docs/latest/install_windows/
