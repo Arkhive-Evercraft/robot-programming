@@ -7,52 +7,36 @@
 3. Install Chocolatey
     ```
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol=[System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'));
-    
     ```
 4. Close and reopen ***PowerShell***, making sure to run it as administrator before continuing
 5. In the new ***PowerShell***, navigate to the folder that the .zip was downloaded to. e.g. `cd C:\Users\YOUR-USERNAME\Downloads`
 
 6. Extract the downloaded .zip (and inner .zip folders) with the following commands:
     ```
-    Expand-Archive -LiteralPath .\windows-ros2.zip -DestinationPath .;
-    Expand-Archive -LiteralPath .\windows-ros2\opencv-3.4.6-vc16.VS2019.zip -DestinationPath 'C:\Program Files\';
-    Expand-Archive -LiteralPath .\windows-ros2\ros2-foxy-20230620-windows-release-amd64.zip -DestinationPath 'C:\dev\';
-    
+    Expand-Archive -LiteralPath .\windows-ros2.zip -DestinationPath .; Expand-Archive -LiteralPath .\windows-ros2\opencv-3.4.6-vc16.VS2019.zip -DestinationPath 'C:\Program Files\'; Expand-Archive -LiteralPath .\windows-ros2\ros2-foxy-20230620-windows-release-amd64.zip -DestinationPath 'C:\dev\';
     ```
     > This extracts the downloaded .zip and then the ***OpenCV*** and **ros2_foxy** folders into the appropriate places
 
 7. Install ***Python***, ***OpenSSL***, Visual C++ Redistributables, CMake, Chocolatey Git Packages
     ```
-    choco install -y python --version=3.8.3; 
-    choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140;
-    choco install -y cmake; 
-    choco install graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;
-      
+    choco install -y python --version=3.8.3; choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140; choco install -y cmake; choco install graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;      
     ```
     > It is fine to ignore any error messages about packages already being installed.
-
-
-
 
 8. Set ***OpenSSL*** and ***OpenCV*** environment variables
     ```
     setx /m OPENSSL_CONF "C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"; setx /m OpenCV_DIR "C:\Program Files\opencv";
-    
     ```
 
-9.  Update environment settings
+9.  Update environment settings using ***Chocolatey*** helper script
 
     ```
-    Set-ExecutionPolicy Bypass -Scope Process -Force;
-    Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1;
-    refreshenv;
-    
+    Set-ExecutionPolicy Bypass -Scope Process -Force; Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1; refreshenv;
     ```
 
 10. Install Python Command Line Tools, RQt Dependencies
     ```
     python -m pip install --upgrade pip; python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro pydot PyQt5
-    
     ```
 11. Run the ***Visual Studio Community*** installer
     ```
