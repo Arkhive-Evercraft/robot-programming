@@ -19,7 +19,7 @@
 
 7. Install ***Python***, ***OpenSSL***, Visual C++ Redistributables, CMake, Chocolatey Git Packages
     ```
-    choco install -y python --version=3.8.3; choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140; choco install -y cmake; choco install graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;      
+    choco install -y python --version=3.8.3; choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140; choco install -y cmake; choco install -y graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;      
     ```
     > It is fine to ignore any error messages about packages already being installed.
 
