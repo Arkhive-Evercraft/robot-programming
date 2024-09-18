@@ -12,11 +12,15 @@
 
 4. Close and reopen ***PowerShell***, making sure to *Run as administrator*.
 
+---
+
 ## 2: Install Python
 In the ***PowerShell*** terminal, run the following:
 ```
 choco install -y python --version=3.8.3
 ```
+
+---
 
 ## 3: Install Visual C++ Redistributables
 In the ***PowerShell*** terminal, run the following:
@@ -30,6 +34,8 @@ choco install -y vcredist2013 vcredist140
 
 > This is fine to ignore; There is no need to reinstall any packages you already have
 
+---
+
 ## 4: Install OpenSSL
 1. In the ***PowerShell*** terminal, run the following:
     ```
@@ -41,6 +47,8 @@ choco install -y vcredist2013 vcredist140
     ```
     setx /m OPENSSL_CONF "C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"
     ```
+
+---
 
 ## 5: Install Visual Studio
 > **[ ! ] IMPORTANT**<br>
@@ -55,6 +63,8 @@ choco install -y vcredist2013 vcredist140
 3. In the left pane, check that **Desktop development with C++** is ticked.
 4. Untick **C++ Clang tools for windows** and **C++ Cmake Tools for windows** in the **Installation details** pane and click *Modify*.
 
+---
+
 ## Step 6: Install OpenCV
 1. Download a precompiled version of OpenCV 3.4.6 from:
     ```
@@ -68,7 +78,7 @@ choco install -y vcredist2013 vcredist140
     setx /m OpenCV_DIR "C:\Program Files\opencv"
     ```
 
-<div style="page-break-after: always;"></div>
+---
 
 ## 7: Install Dependencies
 
@@ -105,7 +115,6 @@ Run the following command in the ***PowerShell*** Terminal to upgrade pip and in
 ```
 python -m pip install --upgrade pip; python -m pip install -U catkin_pkg cryptography empy ifcfg lark-parser lxml netifaces numpy opencv-python pyparsing pyyaml setuptools rosdistro
 ```
-<div style="page-break-after: always;"></div>
 
 ### RQt Dependencies
 1. Paste the following command into the ***PowerShell*** terminal and press enter
@@ -118,6 +127,8 @@ python -m pip install --upgrade pip; python -m pip install -U catkin_pkg cryptog
     choco install graphviz
     ```
 
+---
+
 ## 8: Add Environment Variables to PATH
 
 1. Search for `Environment variables` in the start menu and open **Edit the system environment variables**
@@ -129,12 +140,12 @@ python -m pip install --upgrade pip; python -m pip install -U catkin_pkg cryptog
     - C:\Program Files\CMake\bin
     - C:\Program Files\Graphviz\bin 
 
+---
+
 ## 9: Install ROS2 Foxy
 1. Go to https://github.com/ros2/ros2/releases?page=2 and download the latest package for Windows, e.g., ros2-foxy-*-windows-AMD64.zip
 2. Create a new folder in **C:\\** called **dev** and extract the downloaded .zip into **C:\\dev**
 3. Change the name of the extracted folder from **ros2-windows** to **ros2_foxy**
-
-<div style="page-break-after: always;"></div>
 
 ## Test ROS2 Foxy Install
 1. Open two ***Command Prompt*** windows

@@ -19,7 +19,7 @@
 
 7. Install ***Python***, ***OpenSSL***, Visual C++ Redistributables, CMake, Chocolatey Git Packages
     ```
-    choco install -y python --version=3.8.3; choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140; choco install -y cmake; choco install -y graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;      
+    choco install -y python --version=3.8.3; choco install -y openssl --version=1.1.1.3; choco install -y vcredist2013 vcredist140; choco install -y cmake; choco install -y graphviz; choco install -y -s .\windows-ros2 asio cunit eigen tinyxml-usestl tinyxml2 log4cxx bullet;  
     ```
     > It is fine to ignore any error messages about packages already being installed.
 
@@ -28,8 +28,7 @@
     setx /m OPENSSL_CONF "C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"; setx /m OpenCV_DIR "C:\Program Files\opencv";
     ```
 
-9.  Update environment settings using ***Chocolatey*** helper script
-
+9.  Update environment settings with ***Chocolatey*** helper script
     ```
     Set-ExecutionPolicy Bypass -Scope Process -Force; Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1; refreshenv;
     ```
@@ -57,8 +56,6 @@
     - `C:\Program Files\CMake\bin`
     - `C:\Program Files\Graphviz\bin`
 
-<div style="page-break-after: always;"></div>
-
 ## Test ROS2 Foxy Install
 1. Open two ***Command Prompt*** windows
 2. Run the following in both:
@@ -77,5 +74,8 @@
     ```
     ros2 run demo_nodes_py listener
     ```
+
+    > Select the option to allow the program to execute in the pop-up window
+    
 4. If the two programs are running then ROS is installed properly. 
     ![Talker Listener ROS Demo](images/ros-demo.png)

@@ -21,8 +21,6 @@
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 ## Step 1: Install Chocolatey
 
 ***Chocolatey*** is a package manager for Windows and will be used throughout this guide to install all dependencies and packages for ROS.
@@ -39,8 +37,6 @@
 
     <img src="images/windows-powershell-yes.png" height="300" width="auto" style="border: 2px grey solid"/>
 
-<div style="page-break-after: always;"></div>
-
 4. Execute the ***Chocolatey*** installation script by running the following command in the ***PowerShell*** terminal:
     ```
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -54,9 +50,7 @@ Type `choco` to check that it has been installed.
 
     <img src="images/chocolatey-install-complete.png" style="border: 2px grey solid"/>
 
-<div style="page-break-after: always;"></div>
-
-6. Close and reopen ***PowerShell***, making sure to *Run as administrator*.
+1. Close and reopen ***PowerShell***, making sure to *Run as administrator*.
 
     <img src="images/windows-powershell-admin.png" height="350" width="auto" style="border: 2px grey solid"/>
 
@@ -71,7 +65,7 @@ Type `choco` to check that it has been installed.
     ```
     ![Chocolatey Python Installation](images/chocolatey-python-install.png)
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 3: Install Visual C++ Distributables
 1. In the ***PowerShell*** terminal, run the following:
@@ -87,7 +81,7 @@ Type `choco` to check that it has been installed.
     
     > This is fine to ignore; There is no need to reinstall any packages you already have.
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 4: Install OpenSSL
 
@@ -108,7 +102,7 @@ Type `choco` to check that it has been installed.
     ![Set OpenSSL Environment Variable](images/openssl-env-var.png)
     > This sets an enviroment variable that will persist across different sessions.
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 5: Install Visual Studio
 > **[ ! ] IMPORTANT**<br>
@@ -133,7 +127,6 @@ Type `choco` to check that it has been installed.
 3. Click on *Modify* in the Visual Studio Community section (above *Launch*)
     ![Visual Studio Community Installer Highlight Modify Button](images/vs-community-modify-install.png)
 
-<div style="page-break-after: always;"></div>
 
 4. In the *Modify* window, scroll down to **Desktop development with C++** and make sure the checkbox is ticked.
     ![Visual Studio Community Desktop Development with C++ Highlight Checkbox](images/vs-community-desktop-cpp.png)
@@ -150,7 +143,7 @@ Type `choco` to check that it has been installed.
 6. Allow installer to finish the installation
     ![Visual Studio Community Installation](images/vs-community-installer-modifying.png)
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 6: Install OpenCV
 > ***OpenCV*** is a package that is used for computer vision and image processing. This is not an essential installation but some examples provided by ROS Foxy use ***OpenCV*** and require it to be installed.
@@ -191,7 +184,7 @@ Type `choco` to check that it has been installed.
 
     ![OpenCV Set Environment Variable](images/open-cv-env-var.png)
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 7: Install Dependencies (CMake and Git Packages)
 
@@ -203,13 +196,10 @@ Type `choco` to check that it has been installed.
 
     ![Chocolatey CMake Command in Terminal](images/choco-cmake-install.png)
 
----
-
 ### Download Git packages
 1. Go to https://github.com/ros2/choco-packages/releases/latest
 
     ![Git Packages to Download for Chocolatey](images/git-packages.png)
-
 
 2. Download all except **log4cxx.0.10.0-2.nupkg** and the **source code** folders:
     - asio.1.12.1.nupkg
@@ -219,8 +209,6 @@ Type `choco` to check that it has been installed.
 	- tinyxml-usestl.2.6.2.nupkg
 	- tinyxml2.6.0.0.nupkg
 	- log4cxx.0.10.0.nupkg
-
-<div style="page-break-after: always;"></div>
 
 3. In the ***PowerShell*** terminal, copy and paste the following command but **do not press enter yet**:
     ```
@@ -239,13 +227,11 @@ Type `choco` to check that it has been installed.
 
     ![Chocolatey Installation Changed Command](images/git-packages-changed-command.png)
 
-<div style="page-break-after: always;"></div>
-
-5. Press Enter to install the packages
+1. Press Enter to install the packages
 
     ![Output of Chocolatey Installation of Git Packages](images/git-packages-installed.png)
 
-6. Close and reopen ***PowerShell*** again, making sure to *Run as administrator*.
+2. Close and reopen ***PowerShell*** again, making sure to *Run as administrator*.
 
     ![Windows PowerShell Administrator Mode](images/windows-powershell-admin.png)
 
@@ -289,7 +275,7 @@ Type `choco` to check that it has been installed.
 
     ![Chocolatey Installation Command for Graphviz](images/choco-graphviz-install-command.png)
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 8: Adding Variables to PATH
 1. Click on Start button / press Windows key and search for:
@@ -318,15 +304,13 @@ Type `choco` to check that it has been installed.
 - C:\Program Files\CMake\bin
 - C:\Program Files\Graphviz\bin
 
-<div style="page-break-after: always;"></div>
-
-7. From completing all of the installation steps up until now, these are the environment variables should be set.
+1. From completing all of the installation steps up until now, these are the environment variables should be set.
 
 	![Cropped Picture of Paths Added During Installation](images/final-env-paths-cropped.png)
 	
 	> Make sure to add any if they are missing. The paths should be the same as in the picture if you installed everything in the default locations in the instructions.
 
-<div style="page-break-after: always;"></div>
+---
 
 ## Step 10: Install ROS2 Foxy
 1. Go to https://github.com/ros2/ros2/releases and find the latest release of ROS2 Foxy
