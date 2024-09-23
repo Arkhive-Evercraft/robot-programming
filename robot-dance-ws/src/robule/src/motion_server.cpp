@@ -13,7 +13,7 @@ MotionServer::MotionServer()
 bool MotionServer::init()
 {
     // initialize publishers
-    cmd_vel_pub_   = nh_priv_.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+    cmd_vel_pub_ = nh_priv_.advertise<geometry_msgs::Twist>("cmd_vel", 10);
 
     // initialize subscribers
     odom_sub_ = nh_.subscribe("odom", 10, &MotionServer::odomMsgCallBack, this);
