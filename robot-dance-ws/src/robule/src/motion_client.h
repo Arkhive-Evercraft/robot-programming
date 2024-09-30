@@ -14,19 +14,21 @@ class MotionClient
 public:
     enum direction
     {
-        left = -1,
-        right = 1,
+        left = 1,
+        right = -1,
     };
 
     double turn(int degrees);
-    bool sendGoal(double angular, double linear, ros::Duration seconds);
+    bool sendGoal(robule_msgs::RouteGoal path);
+    ros::Duration beatDuration(double bpm, double beats);
 
-    bool moveCircle(double diameter, ros::Duration duration);
-    bool moveLine(double length, ros::Duration duration);
-    bool moveArc(double diameter, int totalArcs, int moveArcs, ros::Duration duration, int direction);
+    robule_msgs::RouteGoal createCircle(double diameter, ros::Duration duration);
+    robule_msgs::RouteGoal createLine(double length, ros::Duration duration);
+    robule_msgs::RouteGoal createArc(double diameter, int totalArcs, int moveArcs, ros::Duration duration, direction dir);
 
     bool moveOval(double width, double length, ros::Duration duration);
     bool moveHeart(double width, ros::Duration duration);
+    bool moveWiggle(double width, double length, ros::Duration duration);
 
     MotionClient() = default;
     ~MotionClient() = default;

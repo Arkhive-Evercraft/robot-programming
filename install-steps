@@ -1,0 +1,18 @@
+get pip3
+--------
+sudo apt install python3-pip
+
+audio-utils beat manager
+-------------------------
+git clone git@github.com:introlab/audio_utils.git
+
+sudo apt-get install cmake build-essential gfortran texinfo libasound2-dev libpulse-dev libgfortran-*-dev
+
+sudo pip3 install -r requirements.txt
+
+git submodule update --init --recursive
+
+
+get audio cards
+---------------
+pactl list short sinks
