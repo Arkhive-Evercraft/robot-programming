@@ -1,31 +1,59 @@
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="robule"  default="robule"/>
-  <arg name="second_tb3" default="tb3_1"/>
-  <arg name="third_tb3"  default="tb3_2"/>
+    <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]" />
 
-  <arg name="robule_x_pos" default="0.0"/>
-  <arg name="robule_y_pos" default="0.0"/>
-  <arg name="robule_z_pos" default="0.0"/>
-  <arg name="robule_yaw"   default="0.0"/>
+    <arg name="robule" default="robule" />
+    <arg name="modot" default="modot" />
+    <arg name="third_tb3" default="tb3_2" />
 
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="false"/>
-    <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
-    <arg name="debug" value="false"/>
-  </include>  
+    <arg name="robule_x_pos" default="-1.0" />
+    <arg name="robule_y_pos" default="0.0" />
+    <arg name="robule_z_pos" default="0.0" />
+    <arg name="robule_yaw" default="3.14" />
 
-  <group ns = "$(arg robule)">
-    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <arg name="modot_x_pos" default="1.0" />
+    <arg name="modot_y_pos" default="0.0" />
+    <arg name="modot_z_pos" default="0.0" />
+    <arg name="modot_yaw" default="0.0" />
 
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
-      <param name="publish_frequency" type="double" value="50.0" />
-      <param name="tf_prefix" value="$(arg robule)" />
-    </node>
-    
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg robule) -x $(arg robule_x_pos) -y $(arg robule_y_pos) -z $(arg robule_z_pos) -Y $(arg robule_yaw) -param robot_description" />
-  </group>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+        <arg name="paused" value="false" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="gui" value="true" />
+        <arg name="headless" value="false" />
+        <arg name="debug" value="false" />
+    </include>
 
+    <!-- Map server -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(find turtlebot3_navigation)/maps/map.yaml"/>
+
+    <group ns="$(arg robule)">
+        <param name="robot_description"
+            command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -model $(arg robule) -x $(arg robule_x_pos) -y $(arg robule_y_pos) -z $(arg robule_z_pos) -Y $(arg robule_yaw) -param robot_description" />
+
+            <!-- <arg name="multi_robot_name" value="$(arg robule)" />
+            <arg name="init_pose_x" value="$(arg robule_x_pos)" />
+            <arg name="init_pose_y" value="$(arg robule_y_pos)" />
+            <arg name="init_pose_a" value="$(arg robule_yaw)" /> -->
+        <include file="$(find robule)/launch/robule_nav.launch" />
+    </group>
+
+    <!-- <group ns="$(arg modot)">
+        <arg name="multi_robot_name" value="$(arg modot)" />
+        <arg name="init_pose_x" value="$(arg modot_x_pos)" />
+        <arg name="init_pose_y" value="$(arg modot_y_pos)" />
+        <arg name="init_pose_a" value="$(arg modot_yaw)" />
+        <arg name="open_rviz" value="false" />
+
+        <param name="robot_description"
+            command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <include file="$(find turtlebot3_navigation)/launch/turtlebot3_navigation.launch" />
+
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -model $(arg modot) -x $(arg modot_x_pos) -y $(arg modot_y_pos) -z $(arg modot_z_pos) -Y $(arg modot_yaw) -param robot_description" />
+    </group> -->
 </launch>
