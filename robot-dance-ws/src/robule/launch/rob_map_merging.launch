@@ -1,0 +1,32 @@
+<launch>
+    <!-- turtlebot names -->
+    <arg name="turtlebot_1" default="robule" />
+    <arg name="turtlebot_2" default="modot" />
+
+    <!-- launch world and robot models -->
+    <include file="$(find robule)/launch/robule_world.launch" />
+
+    <!-- launch slam gmapping node: robule -->
+    <include ns="$(arg turtlebot_1)"
+        file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+        <arg name="set_base_frame" value="$(arg turtlebot_1)/base_footprint" />
+        <arg name="set_odom_frame" value="$(arg turtlebot_1)/odom" />
+        <arg name="set_map_frame" value="$(arg turtlebot_1)/map" />
+    </include>
+    
+    <!-- launch slam gmapping node: modot -->
+    <include ns="$(arg turtlebot_2)"
+        file="$(find turtlebot3_slam)/launch/turtlebot3_gmapping.launch">
+        <arg name="set_base_frame" value="$(arg turtlebot_2)/base_footprint" />
+        <arg name="set_odom_frame" value="$(arg turtlebot_2)/odom" />
+        <arg name="set_map_frame" value="$(arg turtlebot_2)/map" />
+    </include>
+
+    <!-- launch map merging -->
+    <include file="$(find robule)/launch/map_merge.launch" />
+
+    <!-- launch rviz to view map -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find robule)/rviz/robule_viz.rviz">
+        <param name="use_sim_time" value="true" />
+    </node>
+</launch>

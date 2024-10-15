@@ -1,22 +1,21 @@
 <launch>
     <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]" />
 
-    <arg name="robule" default="robule" />
-    <arg name="modot" default="modot" />
-    <arg name="third_tb3" default="tb3_2" />
+    <arg name="turtlebot_1" default="robule" />
+    <arg name="turtlebot_2" default="modot" />
 
-    <arg name="robule_x_pos" default="-1.0" />
-    <arg name="robule_y_pos" default="0.0" />
-    <arg name="robule_z_pos" default="0.0" />
-    <arg name="robule_yaw" default="3.14" />
+    <arg name="turtlebot_1_x_pos" default="-1.0" />
+    <arg name="turtlebot_1_y_pos" default="0.0" />
+    <arg name="turtlebot_1_z_pos" default="0.0" />
+    <arg name="turtlebot_1_yaw" default="3.14" />
 
-    <arg name="modot_x_pos" default="1.0" />
-    <arg name="modot_y_pos" default="0.0" />
-    <arg name="modot_z_pos" default="0.0" />
-    <arg name="modot_yaw" default="0.0" />
+    <arg name="turtlebot_2_x_pos" default="1.0" />
+    <arg name="turtlebot_2_y_pos" default="0.0" />
+    <arg name="turtlebot_2_z_pos" default="0.0" />
+    <arg name="turtlebot_2_yaw" default="0.0" />
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_1.world" />
         <arg name="paused" value="false" />
         <arg name="use_sim_time" value="true" />
         <arg name="gui" value="true" />
@@ -24,36 +23,39 @@
         <arg name="debug" value="false" />
     </include>
 
-    <!-- Map server -->
-    <node pkg="map_server" name="map_server" type="map_server" args="$(find turtlebot3_navigation)/maps/map.yaml"/>
-
-    <group ns="$(arg robule)">
+    <group ns="$(arg turtlebot_1)">
         <param name="robot_description"
             command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
-            args="-urdf -model $(arg robule) -x $(arg robule_x_pos) -y $(arg robule_y_pos) -z $(arg robule_z_pos) -Y $(arg robule_yaw) -param robot_description" />
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"
+            output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="$(arg turtlebot_1)" />
+            <param name="/use_sim_time" value="true" />
+        </node>
 
-            <!-- <arg name="multi_robot_name" value="$(arg robule)" />
-            <arg name="init_pose_x" value="$(arg robule_x_pos)" />
-            <arg name="init_pose_y" value="$(arg robule_y_pos)" />
-            <arg name="init_pose_a" value="$(arg robule_yaw)" /> -->
-        <include file="$(find robule)/launch/robule_nav.launch" />
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+            args="-urdf -model $(arg turtlebot_1) -x $(arg turtlebot_1_x_pos) -y $(arg turtlebot_1_y_pos) -z $(arg turtlebot_1_z_pos) -Y $(arg turtlebot_1_yaw) -param robot_description">
+            <param name="/use_sim_time" value="true" />
+        </node>
+
     </group>
 
-    <!-- <group ns="$(arg modot)">
-        <arg name="multi_robot_name" value="$(arg modot)" />
-        <arg name="init_pose_x" value="$(arg modot_x_pos)" />
-        <arg name="init_pose_y" value="$(arg modot_y_pos)" />
-        <arg name="init_pose_a" value="$(arg modot_yaw)" />
-        <arg name="open_rviz" value="false" />
-
+    <group ns="$(arg turtlebot_2)">
         <param name="robot_description"
             command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
-
-        <include file="$(find turtlebot3_navigation)/launch/turtlebot3_navigation.launch" />
+            
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"
+            output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="$(arg turtlebot_2)" />
+            <param name="/use_sim_time" value="true" />
+        </node>
 
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
-            args="-urdf -model $(arg modot) -x $(arg modot_x_pos) -y $(arg modot_y_pos) -z $(arg modot_z_pos) -Y $(arg modot_yaw) -param robot_description" />
-    </group> -->
+            args="-urdf -model $(arg turtlebot_2) -x $(arg turtlebot_2_x_pos) -y $(arg turtlebot_2_y_pos) -z $(arg turtlebot_2_z_pos) -Y $(arg turtlebot_2_yaw) -param robot_description">
+            <param name="/use_sim_time" value="true" />
+        </node>
+
+    </group>
 </launch>
